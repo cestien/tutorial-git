@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+<link rel="stylesheet" href="file:////home/cestien/.vscode/extensions/goessner.mdmath-2.7.4/themes/default/style.css">
+
+</head>
+<body class="markdown-body">
+<div  dir="auto" ></div>
+<link rel="stylesheet" href="/home/cestien/memoria/template/nota_template/miestilo.css">
+<h1 dir="auto" id="notas-sobre-git">Notas sobre git</h1>
+<h2 dir="auto" id="tracking-de-un-directorio-local">Tracking de un directorio local</h2>
+<p dir="auto">Nuestro proyecto es un directorio que llamaremos <code>source_dir</code></p>
+<pre><code class="code-line language-bash" dir="auto"><span class="hljs-built_in">cd</span> source_dir
+git init
+</code></pre>
+<p dir="auto">esto crea un directorio <code>.git</code> en dicho directorio, si lo borramos, borramos todo lo relacionado con el tracking.</p>
+<p dir="auto">Creamos un archivo de texto llamada <code>.gitignore</code> el cual contiene una lista con los archivos o directorios dentro del proyecto que no nos interesa trackear.</p>
+<pre><code class="code-line language-bash" dir="auto">git status
+</code></pre>
+<p dir="auto">Nos lista solamente los archivos no ignorados y nos dice cuales están <em>confirmados</em>  (commited), es decir cuales estan siendo traqueados y cuales no.</p>
+<p dir="auto">Los archivos en el proyecto se agrupan del siguiente modo
+<img src="p1.png" alt="img" data-src="p1.png"></p>
+<ul dir="auto">
+<li dir="auto">El área en la cual están todos los archivos exceptuando los excluidos se llama <em>working area</em>.</li>
+<li dir="auto">Los archivos que nos interesa trackear de esta area estan en lo que se llama <em>staging area</em>. Para agregar archivos de la working area a la staging area hacemos:<pre><code class="code-line language-bash" dir="auto">git add file1
+git add file2
+git add -A
+git add file1 file2
+</code></pre>
+Para sacar archivos de la staging area:<pre><code class="code-line language-bash" dir="auto">git reset file1
+git reset
+</code></pre>
+</li>
+</ul>
+<p dir="auto">Los cambios que hagamos en archivos de  la staging area serán traqueados por git y confirmados en el repositorio haciendo:</p>
+<pre><code class="code-line language-bash" dir="auto">git commit -m <span class="hljs-string">&quot;Descripción&quot;</span>
+git <span class="hljs-built_in">log</span>
+</code></pre>
+<p dir="auto">Donde <em>Descripción</em> es una descripción de los cambios realizados en el/los archivos desde la última confirmación hasta esta.  Una vez que ejecutemos git commit se vacía el área de staging y se podrá repetir el proceso con cada modificación que hagamos en un archivo del directorio de trabajo. <code>git log</code> me da detalles del commit que acabamos de hacer.</p>
+<h2 dir="auto" id="tracking-de-un-directorio-remoto">Tracking de un directorio remoto</h2>
+<p dir="auto">El directorio podría ser efectivamente remoto o estar en otro directorio local</p>
+<pre><code class="code-line language-bash" dir="auto">git <span class="hljs-built_in">clone</span> &lt;url&gt; &lt;donde clonar&gt;
+git <span class="hljs-built_in">clone</span> ../remote_dir .
+</code></pre>
+<p dir="auto">En nuestro caso el directorio remoto será <code>source_dir</code> y el local <code>dest_dir</code>. Entonces para clonar el source_dir en el dest_dir hacemos:</p>
+<pre><code class="code-line language-bash" dir="auto"><span class="hljs-built_in">cd</span> dest_dir
+git <span class="hljs-built_in">clone</span> ../source_dir .
+</code></pre>
+<h3 dir="auto" id="login-con-token">Login con token</h3>
+<p dir="auto">Para hacer cosas desde la terminal local en github me pide logearme con un token. El token tiene una duración finita y yo lo puse para que dure 3 meses. Para generarlo hicimos los siguientes pasos:</p>
+<ul dir="auto">
+<li dir="auto">Clikear en el avatar de mi cuenta</li>
+<li dir="auto">Volvear a clikear en el avatar</li>
+<li dir="auto">En el menu de settings al final dice &lt;&gt;developer settings. Entrar ahi</li>
+<li dir="auto">Ir a personal acces tokens</li>
+<li dir="auto">Ir a Tokens (classic)</li>
+<li dir="auto">generate new token (classic)</li>
+<li dir="auto">Una vez que está generado copiarlo al clipboar</li>
+</ul>
+<p dir="auto">Instalar el program gh con apt y ejecutar la linea</p>
+<pre><code class="code-line language-bash" dir="auto">gh auth login
+</code></pre>
+<p dir="auto">En un momento me va a pedir que ponga el token que generamos en lugar del password</p>
+<h2 dir="auto" id="el-proceso-completo">El proceso completo</h2>
+<p dir="auto">Tenemos un directorio asus y el directorio mafalda. La idea es que ambos esten sincronizados.</p>
+<ul dir="auto">
+<li dir="auto">Ir al directorio <code>asus</code></li>
+<li dir="auto">hacer: <code>git init</code>. Es decir hacer que el directorio asus sea un repositorio git</li>
+<li dir="auto">hacer: <code>git add .</code>. Es decir, pasar a la staging area todos los archivos para ser trackeados</li>
+<li dir="auto">si quiero sacar algun file hacemos <code>git reset 'timit/train.yaml'</code></li>
+<li dir="auto">hacer <code>git commit -m &quot;En asus&quot;</code></li>
+<li dir="auto">Crear un nuevo repositorio en github y copiar el link</li>
+<li dir="auto">hacer: <code>git remote add origin https://github.com/cestien/asus.git</code> para asociarlo al directorio local</li>
+<li dir="auto">hacer: `git remote -v para verificar que se haya mandado</li>
+<li dir="auto">git branch -M main</li>
+<li dir="auto">hacer: <code>git push -u origin main</code> para mandar al github</li>
+</ul>
+<h2 dir="auto" id="el-proceso-completo-desde-vcode">El proceso completo desde vcode</h2>
+<p dir="auto">Tenemos github en la nube y tenemos dos máquinas A y B. Las situaciones que analizamos son las siguientes:</p>
+<ul dir="auto">
+<li dir="auto">
+<p dir="auto">La máquina A sube un directorio a github como nuevo repositorio</p>
+<ul dir="auto">
+<li dir="auto">Abrimos el directorio de asus que va a ser nuestro repositorio. Ejemplo el directorio <code>cestien/trabajo/zero-res/zrc/tutorial_notebooks/pytorch</code></li>
+<li dir="auto">En el menu de source control clickeamos Initialize repository.</li>
+<li dir="auto">Cliqueamos commit</li>
+<li dir="auto">Escribimos un comentario, salvamos y cerramos el archivo <code>COMMIT_EDITMSG</code></li>
+<li dir="auto">Cliqueamos Publish branch (podemos elegir si va a ser público o privado).</li>
+</ul>
+</li>
+<li dir="auto">
+<p dir="auto">La máquina B trae el repositorio creado por la máquina A a un directorio local</p>
+<ul dir="auto">
+<li dir="auto">Hacemos git clone <code>https://github.com/cestien/pytorch.git</code></li>
+</ul>
+</li>
+<li dir="auto">
+<p dir="auto">Modificamos algo en la máquina B y lo subimos a github (push)</p>
+<ul dir="auto">
+<li dir="auto">En el menu de source control clickeamos commit</li>
+<li dir="auto">Escribimos un comentario, salvamos y cerramos el archivo <code>COMMIT_EDITMSG</code></li>
+<li dir="auto">Clikeamos sync changes</li>
+</ul>
+</li>
+<li dir="auto">
+<p dir="auto">Descargamos en la máquina A el contenido de github de modo de ver la modifiación que hizo A (pull)</p>
+<ul dir="auto">
+<li dir="auto">En el menu de source control clickeamos Sync changes.</li>
+</ul>
+</li>
+<li dir="auto">
+<p dir="auto">Modificamos algo en la máquina B y lo subimos a la máquina A:</p>
+<ul dir="auto">
+<li dir="auto">Subir a github una modificación hecha en el directorio local (push)
+<ul dir="auto">
+<li dir="auto">En el menu de source control clickeamos commit</li>
+<li dir="auto">Escribimos un comentario, salvamos y cerramos el archivo <code>COMMIT_EDITMSG</code></li>
+<li dir="auto">Clikeamos sync changes</li>
+</ul>
+</li>
+<li dir="auto">Traer del repositorio <code>pytorch</code>de github al directorio local (pull).</li>
+</ul>
+</li>
+</ul>
+
+</body>
+</html>
