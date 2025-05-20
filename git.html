@@ -13,6 +13,22 @@
 <div  dir="auto" ></div>
 <link rel="stylesheet" href="/home/cestien/memoria/template/nota_template/miestilo.css">
 <h1 dir="auto" id="notas-sobre-git">Notas sobre git</h1>
+<h2 dir="auto" id="antes-que-nada">Antes que nada</h2>
+<ul dir="auto">
+<li dir="auto">Setear en la máquina local el user y el mail porque sino vcode no los conoce. Se puede hacer local para un proyecto determinado o global para todos los proyectos que el usuario haga en esa máquina ya que modifica el archivo <code>~/.gitconfig</code>. Mejor hacerlo global. Esto se hace en una terminal:</li>
+</ul>
+<pre><code class="code-line language-bash" dir="auto">git config  --global user.name cestien
+git config  --global user.email cestien@fi.uba.ar
+</code></pre>
+<ul dir="auto">
+<li dir="auto">Si estoy la facu agregar el proxy haciendo:</li>
+</ul>
+<pre><code class="code-line language-bash" dir="auto">git config --global https.proxy http://proxy.fi.uba.ar:8080
+git config --global http.proxy http://proxy.fi.uba.ar:8080
+</code></pre>
+<p dir="auto">Esto se puede corroborar haciendo se puede corroborar haciendo</p>
+<pre><code class="code-line language-bash" dir="auto">git config --global --list
+</code></pre>
 <h2 dir="auto" id="tracking-de-un-directorio-local">Tracking de un directorio local</h2>
 <p dir="auto">Nuestro proyecto es un directorio que llamaremos <code>source_dir</code></p>
 <pre><code class="code-line language-bash" dir="auto"><span class="hljs-built_in">cd</span> source_dir

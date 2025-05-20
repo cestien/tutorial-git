@@ -2,6 +2,22 @@
 
 
 # Notas sobre git 
+## Antes que nada
+  - Setear en la máquina local el user y el mail porque sino vcode no los conoce. Se puede hacer local para un proyecto determinado o global para todos los proyectos que el usuario haga en esa máquina ya que modifica el archivo `~/.gitconfig`. Mejor hacerlo global. Esto se hace en una terminal:
+ ```bash
+ git config  --global user.name cestien
+ git config  --global user.email cestien@fi.uba.ar
+ ```
+   - Si estoy la facu agregar el proxy haciendo:
+   ```bash
+   git config --global https.proxy http://proxy.fi.uba.ar:8080
+   git config --global http.proxy http://proxy.fi.uba.ar:8080
+  ```
+Esto se puede corroborar haciendo se puede corroborar haciendo
+```bash
+git config --global --list
+```
+
 ## Tracking de un directorio local
 Nuestro proyecto es un directorio que llamaremos `source_dir` 
 ```bash
