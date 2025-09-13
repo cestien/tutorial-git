@@ -1,0 +1,2 @@
+# Otras notas de git
+
