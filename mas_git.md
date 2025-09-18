@@ -40,5 +40,7 @@ Una vez que se fusionan tus cambios, tu propuesta se convierte en parte del proy
 
 Puedes pensarlo como un plano maestro del proyecto . Tu pull request es una sugerencia de mejora para ese plano. Cuando el creador lo aprueba y fusiona, esa mejora se convierte en parte oficial del plano original.
 
+Reocdar que git commit crea una versión local del estado del directorio (no hace nada en la nube) para ir a la nube hay que usar pull o push.
+
 
 
